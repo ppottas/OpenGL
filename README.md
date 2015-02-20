@@ -1,2 +1,2 @@
 # OpenGL
-Experiments using OpenGL
+Experiments with OpenGL
