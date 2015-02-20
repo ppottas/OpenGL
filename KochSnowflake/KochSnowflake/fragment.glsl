@@ -230,18 +230,38 @@ return distance(point,Pb);
 void main() {
 
 koch_Count = 3;
-float updown = sin(time+100)*0.1+0.4;
+float updown = sin(time+100)*0.0001-0.25;
 
-koch_points[0] = vec2(0.25,updown);
-koch_points[1] = vec2(0.75,updown);
-koch_points[2] = vec2(0.5,updown)+ normalize(vec2(0.5,0.75)-vec2(0.5,updown))*(0.43301270189221932338186158537647);
-for (int k=0; k<koch_Count; k++)
-	koch_distances[k] = distance(koch_points[k] ,pos);
+koch_points[0] = vec2(-0.25,updown);
+koch_points[1] = vec2(0.25,updown);
+koch_points[2] = vec2(0.0,updown)+ normalize(vec2(0.0,0.25)-vec2(0.0,updown))*(0.43301270189221932338186158537647);
+
+koch_points[0] += mpos;
+koch_points[1] += mpos;
+koch_points[2] += mpos;
+
+float sumdot = 0;
+vec2 prev = vec2(0,0);
+for (int k=0; k<koch_Count; k++) {
+
+vec2 vect = koch_points[k]-pos;
+if (k==0){
+prev = normalize(vect);
+} else {
+sumdot += dot(prev, normalize(vect));
+prev = normalize(vect);
+}
+	koch_distances[k] = length(vect);
+	}
 sortFragments();
 
 koch_Count = 5;
 
 int timelevel =int( mod(time*2,6));
+
+//if (sumdot<0)
+//timelevel=0;
+
 for (int level=0; level<timelevel; level++) {
 	//we need to get five points (by kochenizing)
 	//float linelength = distance(koch_points[0],koch_points[1]);
@@ -279,7 +299,13 @@ for (int level=0; level<timelevel; level++) {
 	if ((koch_mapping[0]==0 && koch_mapping[1]==4) || (koch_mapping[1]==0 && koch_mapping[0]==4 ) )
 	koch_points[1] = koch_points[2];
 		
-		
+		//remove interior edges
+	if ((koch_mapping[0]==2 && koch_mapping[1]==3  ) || (koch_mapping[1]==2 && koch_mapping[0]==3  )){
+		vec2 tmp = koch_points[1] ;
+		koch_points[1] = koch_points[2];
+		koch_points[2] = tmp;
+	}
+
 	
 } //for
 
@@ -323,7 +349,8 @@ float t2 = snoise(vec3(s2,sin(s4*5),s1)+vec3(0,sin(distfrommouse),0));
 float t3 = snoise(vec3(s3,s1,sin(s2*0.01)));
 //vec3 f = vec3(signal,signal,signal);
 vec3 f = vec3(t1,t2,t3);
-FragColor =  vec4(f,1);
+
+FragColor =  vec4(f,1); //vec3(finaldist,finaldist,finaldist)
 
 
 }
