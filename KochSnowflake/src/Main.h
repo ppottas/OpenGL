@@ -5,7 +5,7 @@
 
 #include <GL/glew.h>
 #include <GL/glut.h>
-#include <time.h>
+#include <time.h> 
 
 using std::cout;
 using std::endl;
@@ -18,18 +18,18 @@ const int KEY_ESCAPE = 27;
 
 /** The window's initial width. */
 const int WINDOW_WIDTH = 800;
-/** The window's initial height. */
+/** The window's initial height. */ 
 const int WINDOW_HEIGHT = 800;
 /** The target frames per second. */
 const unsigned int TARGET_FPS = 60;
-/** The target time interval between frames (in nanoseconds). */
+/** The target time interval between frames (in nanoseconds).  */ 
 const long TARGET_DELTA_T = floor(
       (MILLISECONDS_PER_SECOND) *
-      ((double)1 / (double)TARGET_FPS));
+      ((double)1 / (double)TARGET_FPS)); 
 
 /** Last time a frame was drawn. */
 int last_frame;
-
+ 
 /** Last time the FPS was printed. */
 int last_print;
 
