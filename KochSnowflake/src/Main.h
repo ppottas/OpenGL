@@ -7,6 +7,8 @@
 #include <GL/glut.h>
 #include <time.h>
 
+
+
 using std::cout;
 using std::endl;
 
