@@ -24,6 +24,8 @@ display()
 GLint
 findAttribute(const char* name)
 {
+	
+	
    GLint location = glGetAttribLocation(program, name);
 
    if (location == -1)
